@@ -79,7 +79,7 @@ class VersusAIViewController: UIViewController {
             move = game.easyAIMove()
         }
 
-        for button in buttonsArray {
+        for button in buttonsArray { // this is where the AI makes the move on the board.
             if button.tag == move && game.turn <= 9 {
                 game.board[move] = AI.letter
                 button.setTitle(AI.letter, for: UIControlState())
@@ -90,7 +90,7 @@ class VersusAIViewController: UIViewController {
         game.turn += 1
     }
     
-    func disableButtons() {
+    func disableButtons() { // when the game is over, the board should "freeze."
         for button in buttonsArray {
             button.isEnabled = false
         }
@@ -132,9 +132,10 @@ class VersusAIViewController: UIViewController {
         game.AI = AI
         
         currentPlayer = whoIsTheCurrentPlayer()!
-        gameStatusUpdate()
-        if currentPlayer === AI {
+        if currentPlayer === AI { // this is if the AI goes first.
             AIMove()
+            gameStatusUpdate()
+        } else {
             gameStatusUpdate()
         }
     }

@@ -10,7 +10,7 @@ import Foundation
 import GameplayKit
 
 class TicTacToe {
-    var board = [String](repeating: " ", count: 9)
+    var board = [String](repeating: " ", count: 9) // In this demo, " " means an empty spot of the board.
     var tempBoard: [String]!
     var turn = 1
     var noughtForks = 0
@@ -26,7 +26,7 @@ class TicTacToe {
     
     func thereIsAWinner(_ board: [String]) -> Bool {
         for combination in winCombinations {
-            if board[combination[0]] != " " && board[combination[0]] == board[combination[1]] && board[combination[1]] == board[combination[2]] {
+            if board[combination[0]] != " " && board[combination[0]] == board[combination[1]] && board[combination[1]] == board[combination[2]] { // three in a row
                 return true
             }
         }
@@ -42,9 +42,9 @@ class TicTacToe {
     }
     
     func isWinningMove(_ position: Int, player: Player!, currentBoard: [String]) -> Bool {
-        tempBoard = currentBoard
+        tempBoard = currentBoard // use a temporary board to see if the move wins them the game.
         if tempBoard[position] == " " {
-            tempBoard[position] = player.letter
+            tempBoard[position] = player.letter // put in the theoretical move into the tempBoard if it is empty.
             if thereIsAWinner(tempBoard) {
                 return true
             } else {
@@ -90,7 +90,7 @@ class TicTacToe {
         return positions
     }
     
-    func emptyBoard() -> Bool {
+    func isBoardEmpty() -> Bool {
         for i in 0...8 {
             if board[i] != " " {
                 return false
@@ -166,13 +166,11 @@ class TicTacToe {
         return positions
     }
     
-    // function below makes the impossible AI slightly more fun
-    
-    func randomizeMove(_ possiblePositions: [Int]) -> Int {
+    func randomizeMove(_ possiblePositions: [Int]) -> Int { // make the game slightly more fun.
         return possiblePositions[GKRandomSource.sharedRandom().nextInt(upperBound: possiblePositions.count)]
     }
     
-    func randomMove() -> Int {
+    func randomMove() -> Int { // put a piece anywhere in the board.
         var random: Int
         repeat {
             random = GKRandomSource.sharedRandom().nextInt(upperBound: 9)
@@ -221,7 +219,7 @@ class TicTacToe {
     }
     
     func impossibleAIMove() -> Int {
-        if emptyBoard() {
+        if isBoardEmpty() { // this is when impossible ai goes first.
             return randomizeMove([0,2,4,6,8])
         }
         var choices: [String: [Int]] = ["ai win moves": [], "block human win": [], "ai fork moves": [], "block human forks": [], "center move": [], "opposite corner of human piece": [], "empty corner": [], "empty side": []]
@@ -237,19 +235,20 @@ class TicTacToe {
                 choices["ai fork moves"]?.append(position)
             }
         }
-
+        
         choices["block human forks"] = possibleForkBlocks()
         if isCenterEmpty() {
             choices["center move"]?.append(4)
         }
-
+        
         if let oppositeCorner = oppositeCornerPosition() {
             choices["opposite corner of human piece"]?.append(oppositeCorner)
         }
-
+        
         choices["empty corner"] = emptyCornerPositions()
         choices["empty side"] = emptySidePositions()
-        if !choices["ai win moves"]!.isEmpty {
+        
+        if !choices["ai win moves"]!.isEmpty { // these moves are in order of importance (first being most important)
             return randomizeMove(choices["ai win moves"]!)
         } else if !choices["block human win"]!.isEmpty {
             return randomizeMove(choices["block human win"]!)
@@ -266,6 +265,7 @@ class TicTacToe {
         } else if !choices["empty side"]!.isEmpty {
             return randomizeMove(choices["empty side"]!)
         }
-        return randomMove()
+
+        return randomMove() // if all else fails.
     }
 }

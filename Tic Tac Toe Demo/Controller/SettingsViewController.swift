@@ -6,6 +6,10 @@
 //  Copyright © 2016 jkang. All rights reserved.
 //
 
+/*
+ Settings are stored and saved.
+ */
+
 import UIKit
 
 class SettingsViewController: UIViewController {

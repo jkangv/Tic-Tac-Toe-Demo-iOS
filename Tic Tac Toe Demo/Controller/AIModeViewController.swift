@@ -41,7 +41,7 @@ class AIModeViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let versusAIVC = segue.destination as? VersusAIViewController {
             if let mode = sender as? String {
-                versusAIVC.difficulty = mode
+                versusAIVC.difficulty = mode // VersusAIViewController gets the mode as a string from this code.
             }
         }
     }

@@ -51,7 +51,7 @@ class VersusHumanViewController: UIViewController {
         return player
     }
     
-    func disableButtons() {
+    func disableButtons() { // if the game is over, the game should "freeze"
         for button in buttonsArray {
             button.isEnabled = false
         }
