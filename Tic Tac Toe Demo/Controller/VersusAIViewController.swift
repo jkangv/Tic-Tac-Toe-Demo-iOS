@@ -64,6 +64,8 @@ class VersusAIViewController: UIViewController {
             } else if humanTurn == "second" && game.turn % 2 == 0 {
                 player = human
             }
+        } else {
+            player = human;
         }
         return player
     }
